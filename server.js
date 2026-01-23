@@ -6,7 +6,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static("."));
 
-app.post("/lookup", (req, res) => {
+// Support both local `/lookup` and Vercel-style `/api/lookup` paths
+app.post(["/lookup", "/api/lookup"], (req, res) => {
   const { domain } = req.body;
 
   if (!domain) {
@@ -30,7 +31,7 @@ app.post("/lookup", (req, res) => {
       });
     }
   });
-}); // This closing brace was missing
+});
 
 app.listen(PORT, () => {
   console.log(`netprobe app listening at http://localhost:${PORT}`);
