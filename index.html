@@ -129,6 +129,123 @@
         color: #667eea;
         font-weight: bold;
       }
+
+      /* ============================================
+         RESPONSIVE DESIGN - MOBILE FIRST APPROACH
+         ============================================ */
+
+      /* 
+         Media Queries: Apply styles when screen width is BELOW a certain size
+         Common breakpoints:
+         - Mobile: < 480px (small phones)
+         - Tablet: 481px - 768px
+         - Desktop: > 768px
+      */
+
+      /* For tablets and small screens (max-width: 768px) */
+      @media screen and (max-width: 768px) {
+        .container {
+          padding: 30px 25px; /* Reduce padding on smaller screens */
+          margin: 10px; /* Add small margin to prevent edge-to-edge */
+        }
+
+        h1 {
+          font-size: 24px; /* Slightly smaller heading */
+        }
+
+        .subtitle {
+          font-size: 13px;
+        }
+      }
+
+      /* For mobile phones (max-width: 480px) */
+      @media screen and (max-width: 480px) {
+        body {
+          padding: 10px; /* Less padding on mobile */
+        }
+
+        .container {
+          padding: 25px 20px; /* Even less padding */
+          border-radius: 8px; /* Slightly smaller radius */
+        }
+
+        h1 {
+          font-size: 22px; /* Smaller heading for mobile */
+          margin-bottom: 8px;
+        }
+
+        .subtitle {
+          font-size: 12px;
+          margin-bottom: 25px;
+        }
+
+        /* Stack input and button vertically on very small screens */
+        .input-group {
+          flex-direction: column; /* Stack vertically instead of horizontally */
+          gap: 12px; /* More space between stacked elements */
+        }
+
+        input {
+          width: 100%; /* Full width */
+          padding: 14px 15px; /* Slightly more padding for easier tapping */
+          font-size: 16px; /* Keep 16px to prevent iOS zoom on focus */
+        }
+
+        button {
+          width: 100%; /* Full width button */
+          padding: 14px 30px; /* More padding for better touch target */
+          font-size: 16px;
+        }
+
+        .result {
+          padding: 15px; /* Less padding on mobile */
+          margin-top: 15px;
+        }
+
+        .result h3 {
+          font-size: 16px; /* Smaller heading in results */
+        }
+
+        .address-list li {
+          padding: 10px; /* More padding for readability */
+          font-size: 14px; /* Slightly smaller font */
+          word-break: break-all; /* Break long IP addresses */
+        }
+      }
+
+      /* For very small phones (max-width: 360px) */
+      @media screen and (max-width: 360px) {
+        .container {
+          padding: 20px 15px; /* Minimal padding */
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .subtitle {
+          font-size: 11px;
+        }
+
+        input,
+        button {
+          padding: 12px 15px;
+          font-size: 15px;
+        }
+      }
+
+      /* Landscape orientation on mobile devices */
+      @media screen and (max-height: 500px) and (orientation: landscape) {
+        body {
+          padding: 5px;
+        }
+
+        .container {
+          padding: 20px;
+          max-height: 95vh; /* Limit height */
+          overflow-y: auto; /* Allow scrolling if needed */
+        }
+      }
     </style>
   </head>
   <body>
