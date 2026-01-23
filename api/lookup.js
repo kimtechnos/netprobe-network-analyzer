@@ -1,4 +1,8 @@
 const dns = require("dns");
+const { promisify } = require("util");
+
+const lookup = promisify(dns.lookup);
+const resolve = promisify(dns.resolve);
 
 // Vercel serverless function
 module.exports = async (req, res) => {
@@ -25,23 +29,23 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: "Domain is required" });
   }
 
-  // Try dns.lookup first
-  dns.lookup(domain, (err, address, family) => {
-    if (err) {
-      // If lookup fails, try dns.resolve as fallback
-      dns.resolve(domain, (err, addresses) => {
-        if (err) {
-          return res.status(500).json({ error: "Could not find this domain" });
-        }
-        // Return array of addresses
-        return res.status(200).json({ addresses });
-      });
-    } else {
-      // Return single address with IP version
-      return res.status(200).json({
-        address,
-        family: family === 4 ? "IPv4" : "IPv6",
-      });
+  try {
+    // Try dns.lookup first
+    const result = await lookup(domain);
+    const address = result.address || result;
+    const family = result.family || 4;
+    
+    return res.status(200).json({
+      address,
+      family: family === 4 ? "IPv4" : "IPv6",
+    });
+  } catch (err) {
+    // If lookup fails, try dns.resolve as fallback
+    try {
+      const addresses = await resolve(domain);
+      return res.status(200).json({ addresses: Array.isArray(addresses) ? addresses : [addresses] });
+    } catch (resolveErr) {
+      return res.status(500).json({ error: "Could not find this domain" });
     }
-  });
+  }
 };
