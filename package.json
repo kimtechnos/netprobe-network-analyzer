@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "DNS Lookup Tool",
   "scripts": {
-    "dev": "node server.js",
-    "build": "echo 'Static site - no build needed'"
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
