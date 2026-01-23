@@ -21,8 +21,18 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  // Parse request body (Vercel may not auto-parse)
+  let body = req.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch (e) {
+      return res.status(400).json({ error: "Invalid JSON" });
+    }
+  }
+
   // Get domain from request body
-  const { domain } = req.body;
+  const { domain } = body;
 
   // Validate domain input
   if (!domain) {
